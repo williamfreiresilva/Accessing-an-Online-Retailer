@@ -16,30 +16,16 @@ def get_driver():
   options.add_experimental_option("excludeSwitches",["enable-automation"])
 
   driver = webdriver.Chrome(options=options)
-  driver.get("http://automated.pythonanywhere.com/login/")
+  driver.get("https://titan22.com/account/login?return_url=%2Faccount")
   return driver
-
-def clean_text(text):
-  output = float(text.split(": ")[1])
-  return output
-
-def write_file(text):
-  filename = f"{dt.now().strftime('%Y-%m-%d.%H-%M-%S')}.txt"
-  with open(filename, 'w') as file:
-    file.write(text)
 
 def main():
   driver = get_driver()
-  driver.find_element(by="id",value="id_username").send_keys("automated")
+  driver.find_element(by="id",value="CustomerEmail").send_keys("<your-email")
   time.sleep(2)
-  driver.find_element(by="id",value="id_password").send_keys("automatedautomated" + Keys.RETURN)
+  driver.find_element(by="id",value="CustomerPassword").send_keys("<your-password" + Keys.RETURN)
   time.sleep(2)
-  driver.find_element(by="xpath",value="/html/body/nav/div/a").click()
-  while True:
-    time.sleep(2)
-    element = driver.find_element(by="xpath",value="/html/body/div[1]/div/h1[2]/div")
-    text = str(clean_text(element.text))
-    write_file(text)
+  driver.find_element(by="xpath",value="/html/body/footer/div/section/div/div[1]/div[1]/div[1]/nav/ul/li[1]/a").click()
+  print(driver.current_url)
   
-
 print(main())
